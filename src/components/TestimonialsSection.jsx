@@ -20,13 +20,13 @@ const TestimonialsSection = () => {
   ];
 
   // Auto-rotate testimonials
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveTestimonial(prev => (prev + 1) % testimonials.length);
-    }, 5000);
+    useEffect(() => {
+      const interval = setInterval(() => {
+        setActiveTestimonial(prev => (prev + 1) % testimonials.length);
+      }, 5000);
 
-    return () => clearInterval(interval);
-  }, []);
+      return () => clearInterval(interval);
+    }, [testimonials.length]); // Include testimonials.length in the dependency array
 
   return (
     <section className="py-16 px-4 bg-white">

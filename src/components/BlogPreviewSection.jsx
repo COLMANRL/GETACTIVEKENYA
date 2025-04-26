@@ -1,7 +1,40 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ChevronRight } from 'lucide-react';
 
 const BlogPreviewSection = () => {
+  useEffect(() => {
+    // Simple function to handle animations
+    const animateElements = () => {
+      const elements = document.querySelectorAll('.animate-on-scroll');
+
+      elements.forEach(element => {
+        // Remove opacity-0 to make elements visible
+        element.classList.remove('opacity-0');
+      });
+    };
+
+    // Trigger animations after a short delay
+    setTimeout(animateElements, 500);
+
+    // Optional: Add scroll-based animation if needed
+    const handleScroll = () => {
+      const elements = document.querySelectorAll('.animate-on-scroll');
+
+      elements.forEach(element => {
+        const position = element.getBoundingClientRect();
+
+        // If element is in viewport
+        if(position.top < window.innerHeight) {
+          element.classList.remove('opacity-0');
+        }
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    // Clean up event listener
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <section className="py-16 px-4 bg-gradient-to-br from-blue-50 to-purple-50">
       <div className="container mx-auto">
@@ -24,7 +57,7 @@ const BlogPreviewSection = () => {
           {/* Blog Post 1 */}
           <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow animate-on-scroll opacity-0 transition-opacity duration-1000">
             <img
-              src="/api/placeholder/400/200"
+              src="/blog1.png"
               alt="Blog post thumbnail"
               className="w-full h-48 object-cover"
             />
@@ -34,7 +67,7 @@ const BlogPreviewSection = () => {
               <p className="text-gray-600 mb-4">
                 Exploring the unique challenges and solutions for anxiety in the context of Kenyan society.
               </p>
-              <a href="#" className="text-blue-500 font-medium flex items-center">
+              <a href="#blog1" className="text-blue-500 font-medium flex items-center">
                 Read more <ChevronRight size={16} className="ml-1" />
               </a>
             </div>
@@ -43,7 +76,7 @@ const BlogPreviewSection = () => {
           {/* Blog Post 2 */}
           <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow animate-on-scroll opacity-0 transition-opacity duration-1000 delay-150">
             <img
-              src="/api/placeholder/400/200"
+              src="/blog2.png"
               alt="Blog post thumbnail"
               className="w-full h-48 object-cover"
             />
@@ -53,7 +86,7 @@ const BlogPreviewSection = () => {
               <p className="text-gray-600 mb-4">
                 Tips for maintaining healthy, radiant skin using natural ingredients found in Kenya.
               </p>
-              <a href="#" className="text-blue-500 font-medium flex items-center">
+              <a href="#blog2" className="text-blue-500 font-medium flex items-center">
                 Read more <ChevronRight size={16} className="ml-1" />
               </a>
             </div>
@@ -62,7 +95,7 @@ const BlogPreviewSection = () => {
           {/* Blog Post 3 */}
           <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow animate-on-scroll opacity-0 transition-opacity duration-1000 delay-300">
             <img
-              src="/api/placeholder/400/200"
+              src="/blog4.png"
               alt="Blog post thumbnail"
               className="w-full h-48 object-cover"
             />
@@ -72,7 +105,7 @@ const BlogPreviewSection = () => {
               <p className="text-gray-600 mb-4">
                 How mental health directly impacts physical wellbeing and practical ways to nurture both.
               </p>
-              <a href="#" className="text-blue-500 font-medium flex items-center">
+              <a href="#blog3" className="text-blue-500 font-medium flex items-center">
                 Read more <ChevronRight size={16} className="ml-1" />
               </a>
             </div>

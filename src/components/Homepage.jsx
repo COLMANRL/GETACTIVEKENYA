@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+//import React, { useState, useEffect } from 'react';
 import Header from './Header';
 import HeroSection from './HeroSection';
 import ServicesSection from './ServicesSection';
@@ -16,9 +16,9 @@ const HomePage = () => {
       <Header />
       <HeroSection />
       <ServicesSection />
+      <BlogPreviewSection />
       <BookingSection />
       <TestimonialsSection />
-      <BlogPreviewSection />
       <ContactSection />
       <Footer />
     </div>
