@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "first-post",
+    "title": "First Blog Post",
+    "description": "This is a short description for the first post.",
+    "image": "/images/post1.jpg",
+    "content": "This is the full content of the first blog post."
+  },
+  {
+    "slug": "second-post",
+    "title": "Second Blog Post",
+    "description": "This is a short description for the second post.",
+    "image": "/images/post2.jpg",
+    "content": "This is the full content of the second blog post."
+  },
+  {
+    "slug": "third-post",
+    "title": "Third Blog Post",
+    "description": "This is a short description for the third post.",
+    "image": "/images/post3.jpg",
+    "content": "This is the full content of the third blog post."
+  }
+]
