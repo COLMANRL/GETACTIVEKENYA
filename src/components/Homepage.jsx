@@ -7,6 +7,7 @@ import TestimonialsSection from './TestimonialsSection';
 import BlogPreviewSection from './BlogPreviewSection';
 import ContactSection from './ContactSection';
 import Footer from './Footer';
+import Chatbot from './Chatbot/Chatbot';
 
 
 
