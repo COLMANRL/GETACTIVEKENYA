@@ -1,12 +1,12 @@
-// Updated ChatBot.jsx with all three features implemented
+// client/src/components/Chatbot.jsx
+
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './Chatbot.css';
 import FeedbackComponent from './FeedbackComponent';
 import { translations } from './translation';
-import { GoogleGenAI } from "@google/genai";
 
-const ChatBot = () => {
+const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
@@ -15,8 +15,12 @@ const ChatBot = () => {
   const [language, setLanguage] = useState('en'); // Default language is English
   const [feedbackData, setFeedbackData] = useState([]); // Store feedback data
 
-  // Replace with your actual Gemini API key
-  const API_KEY = process.env.REACT_APP_GEMINI_API_KEY;
+  // Define your backend API URL
+  // Use a relative path if serving frontend and backend from the same domain/port in production
+  // For development, use the full URL including port
+  const BACKEND_API_URL = process.env.NODE_ENV === 'production'
+    ? '/api/chatbot/generate-text' // Adjust this path if your server setup is different
+    : 'http://localhost:3001/api/chatbot/generate-text'; // <-- Match your backend server URL and route
 
   // Load messages from localStorage when component mounts
   useEffect(() => {
@@ -43,6 +47,7 @@ const ChatBot = () => {
     localStorage.setItem('chatLanguage', language);
   }, [language]);
 
+  // Scroll to bottom whenever messages update
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
@@ -51,10 +56,14 @@ const ChatBot = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const generateMessageId = () => {
+    return Date.now().toString(36) + Math.random().toString(36).substr(2);
+  };
+
   const toggleChat = () => {
     setIsOpen(!isOpen);
+    // Only add welcome message if chat is being opened AND it's a fresh conversation
     if (!isOpen && messages.length === 0) {
-      // Add welcome message when opening for the first time
       setMessages([
         {
           id: generateMessageId(),
@@ -65,13 +74,19 @@ const ChatBot = () => {
     }
   };
 
-  const generateMessageId = () => {
-    return Date.now().toString(36) + Math.random().toString(36).substr(2);
-  };
-
   const toggleLanguage = () => {
     const newLanguage = language === 'en' ? 'sw' : 'en';
     setLanguage(newLanguage);
+    // Optionally update welcome message if language changes while chat is open and empty
+    if (messages.length === 1 && messages[0].sender === 'bot' && messages[0].text === translations[language].welcomeMessage) {
+        setMessages([
+            {
+                id: generateMessageId(),
+                text: translations[newLanguage].welcomeMessage,
+                sender: 'bot'
+            }
+        ]);
+    }
   };
 
   const handleInputChange = (e) => {
@@ -88,13 +103,10 @@ const ChatBot = () => {
 
     setFeedbackData(prev => [...prev, newFeedback]);
 
-    // Here you would typically send this feedback to your server
-    // For now, we'll just log it to console
     console.log('Feedback received:', newFeedback);
 
-    // In a real application, you might want to send this to your backend:
-    // Example:
-    // axios.post('https://your-api.com/feedback', newFeedback)
+    // In a real application, you would send this feedback to your server
+    // axios.post('/api/feedback', newFeedback)
     //   .then(response => console.log('Feedback sent successfully'))
     //   .catch(error => console.error('Error sending feedback:', error));
   };
@@ -102,6 +114,7 @@ const ChatBot = () => {
   const clearConversation = () => {
     setMessages([]);
     localStorage.removeItem('chatMessages');
+    // Add welcome message back after clearing if chat is open
     if (isOpen) {
       setMessages([
         {
@@ -123,47 +136,32 @@ const ChatBot = () => {
       sender: 'user'
     };
 
+    // Add user message to the UI immediately for responsiveness
     setMessages(prev => [...prev, userMessage]);
-    setInput('');
-    setIsLoading(true);
+    setInput(''); // Clear input field
+    setIsLoading(true); // Show loading indicator
 
     try {
-      // Create conversation history for context
-      const conversationHistory = messages.map(msg => ({
+      // Prepare conversation history for the backend.
+      // The backend expects an array of objects with 'role' and 'parts'.
+      // This `messages` state already contains the previous user/bot messages.
+      // We explicitly filter out any potential 'system' roles, though they shouldn't be here.
+      const conversationHistoryForBackend = messages.map(msg => ({
         role: msg.sender === 'user' ? 'user' : 'model',
         parts: [{ text: msg.text }]
       }));
 
-      // Format the request according to Gemini API requirements
-      const prompt = {
-        contents: [
-          {
-            role: "system",
-            parts: [{
-              text: `You are a specialized mental health assistant for GetActive Kenya.
-
-              Guidelines:
-              - Be empathetic and supportive for people with anxiety, depression, and stress
-              - Provide culturally appropriate advice for Kenyan context
-              - Suggest physical activities and mental health practices based on GetActive Kenya's programs
-              - Never diagnose conditions or replace professional help
-              - Always encourage seeking professional support for serious concerns
-              - Include relevant GetActive Kenya resources when appropriate
-
-              ${language === 'sw' ? 'Respond in Swahili.' : 'Respond in English.'}`
-            }]
-          },
-          ...conversationHistory,
-          {
-            role: "user",
-            parts: [{ text: input }]
-          }
-        ]
-      };
-
+      // Make the API call to your backend
       const response = await axios.post(
-        `https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${API_KEY}`,
-        prompt,
+        BACKEND_API_URL,
+        {
+          // The current user input is sent under the 'prompt' key
+          prompt: userMessage.text, // Use userMessage.text directly
+          // The previous conversation history is sent under the 'chatHistory' key
+          chatHistory: conversationHistoryForBackend,
+          // The current language preference is sent
+          language: language
+        },
         {
           headers: {
             'Content-Type': 'application/json'
@@ -171,9 +169,10 @@ const ChatBot = () => {
         }
       );
 
-      // Extract response text from Gemini API
-      const botResponse = response.data.candidates[0].content.parts[0].text;
+      // Extract the generated text from your backend's response
+      const botResponse = response.data.text;
 
+      // Add the bot's response to the UI
       setMessages(prev => [
         ...prev,
         {
@@ -183,22 +182,30 @@ const ChatBot = () => {
         }
       ]);
     } catch (error) {
-      console.error('Error with Gemini API:', error);
+      console.error('Error communicating with backend:', error);
+
+      // Construct an informative error message for the user
+      const errorMessage = error.response && error.response.data && error.response.data.error
+                           ? (typeof error.response.data.error === 'string' ? error.response.data.error : JSON.stringify(error.response.data.error))
+                           : translations[language].errorMessage;
+
+      // Display the error message in the chat
       setMessages(prev => [
         ...prev,
         {
           id: generateMessageId(),
-          text: translations[language].errorMessage,
-          sender: 'bot'
+          text: errorMessage,
+          sender: 'bot',
+          isError: true // Optional: Add a flag to style error messages differently
         }
       ]);
     } finally {
-      setIsLoading(false);
+      setIsLoading(false); // Hide loading indicator
     }
   };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
+    if (e.key === 'Enter' && !isLoading && input.trim() !== '') {
       sendMessage();
     }
   };
@@ -235,10 +242,11 @@ const ChatBot = () => {
             {messages.map((message) => (
               <div
                 key={message.id}
-                className={`message ${message.sender === 'user' ? 'user-message' : 'bot-message'}`}
+                // Apply a different class for error messages if you added isError flag
+                className={`message ${message.sender === 'user' ? 'user-message' : 'bot-message'} ${message.isError ? 'error-message' : ''}`}
               >
                 {message.text}
-                {message.sender === 'bot' && (
+                {message.sender === 'bot' && !message.isError && ( // Don't show feedback for error messages
                   <FeedbackComponent
                     messageId={message.id}
                     onSubmitFeedback={handleFeedback}
@@ -279,4 +287,4 @@ const ChatBot = () => {
   );
 };
 
-export default ChatBot;
+export default Chatbot;

@@ -38,14 +38,14 @@ const HeroSection = () => {
          <img
            src="/wellness.png"
            alt="Mental wellness background"
-           className="w-full h-full object-cover opacity-15"
+           className="w-full h-full object-cover opacity-70"
          />
        </div>
      </div>
 
      {/* Content Layer */}
-     <div className="container mx-auto relative z-10">
-       <div className="max-w-2xl mx-auto text-center animate-on-scroll">
+     <div className="container mx-auto relative z-10 " >
+       <div className="max-w-2xl mx-auto text-center animate-on-scroll ">
          <h2 className="text-4xl md:text-5xl font-bold mb-4 leading-tight">
            Nurture Your Mind, <span className="bg-gradient-to-r from-green-500 to-blue-500 bg-clip-text text-transparent">Transform Your Life</span>
          </h2>

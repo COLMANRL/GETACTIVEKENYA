@@ -21,6 +21,7 @@ const HomePage = () => {
       <BookingSection />
       <TestimonialsSection />
       <ContactSection />
+      <Chatbot />
       <Footer />
     </div>
   );
