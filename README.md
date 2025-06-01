@@ -4,7 +4,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 You need to install a few node packages to run this project. 
 Gemini googlegenerative package
-.dotenv googleapis
+.dotenv googleapis for calendar management
 
 
 ## Available Scripts
