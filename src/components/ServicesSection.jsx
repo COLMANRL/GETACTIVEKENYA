@@ -23,8 +23,8 @@ const ServicesSection = () => {
               <p className="text-gray-600 mb-4">
                 Individual and group therapy sessions with licensed professionals specializing in anxiety, depression, trauma, and more.
               </p>
-              <a href="#" className="text-green-500 font-medium flex items-center">
-                Learn more <ChevronRight size={16} className="ml-1" />
+              <a href="#book" className="text-green-500 font-medium flex items-center">
+                Book now <ChevronRight size={16} className="ml-1" />
               </a>
             </div>
           </div>
@@ -40,7 +40,7 @@ const ServicesSection = () => {
                 Holistic approaches to skincare, nutrition, and physical wellness that complement mental health practices.
               </p>
               <a href="#" className="text-blue-500 font-medium flex items-center">
-                Learn more <ChevronRight size={16} className="ml-1" />
+                Coming soon <ChevronRight size={16} className="ml-1" />
               </a>
             </div>
           </div>
@@ -55,7 +55,7 @@ const ServicesSection = () => {
               <p className="text-gray-600 mb-4">
                 Book personalized one-on-one sessions with our qualified therapists, available both online and in-person.
               </p>
-              <a href="#" className="text-purple-500 font-medium flex items-center">
+              <a href="#book" className="text-purple-500 font-medium flex items-center">
                 Book now <ChevronRight size={16} className="ml-1" />
               </a>
             </div>

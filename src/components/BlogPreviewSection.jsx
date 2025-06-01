@@ -67,8 +67,8 @@ const BlogPreviewSection = () => {
               <p className="text-gray-600 mb-4">
                 Exploring the unique challenges and solutions for anxiety in the context of Kenyan society.
               </p>
-              <a href="#blog1" className="text-blue-500 font-medium flex items-center">
-                Read more <ChevronRight size={16} className="ml-1" />
+              <a href="#blog1" className="text-red-500 font-medium flex items-center">
+                Coming soon <ChevronRight size={16} className="ml-1" />
               </a>
             </div>
           </div>
@@ -86,8 +86,8 @@ const BlogPreviewSection = () => {
               <p className="text-gray-600 mb-4">
                 Tips for maintaining healthy, radiant skin using natural ingredients found in Kenya.
               </p>
-              <a href="#blog2" className="text-blue-500 font-medium flex items-center">
-                Read more <ChevronRight size={16} className="ml-1" />
+              <a href="#blog2" className="text-red-500 font-medium flex items-center">
+                Coming soon <ChevronRight size={16} className="ml-1" />
               </a>
             </div>
           </div>
@@ -105,8 +105,8 @@ const BlogPreviewSection = () => {
               <p className="text-gray-600 mb-4">
                 How mental health directly impacts physical wellbeing and practical ways to nurture both.
               </p>
-              <a href="#blog3" className="text-blue-500 font-medium flex items-center">
-                Read more <ChevronRight size={16} className="ml-1" />
+              <a href="#blog3" className="text-red-500 font-medium flex items-center">
+              Coming soon <ChevronRight size={16} className="ml-1" />
               </a>
             </div>
           </div>
