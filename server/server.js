@@ -170,6 +170,16 @@ ${JSON.stringify(tokens, null, 2)}
     }
 });
 
+// --- **CRUCIAL: THE FEEDBACK ROUTE** ---
+app.post('/api/feedback', (req, res) => {
+  const feedback = req.body; // This will contain the data sent from your frontend
+  console.log('Received feedback:', feedback);
+
+  // IMPORTANT: In a real application, save this feedback to a database here
+  // For now, just send a success response to confirm it's working
+  res.status(200).json({ message: 'Feedback received successfully!', receivedData: feedback });
+});
+
 // Existing Email sending route (for contact form)
 app.post('/api/send-email', async (req, res) => {
     const { subject, name, email, message } = req.body;

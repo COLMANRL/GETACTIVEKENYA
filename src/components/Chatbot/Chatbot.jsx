@@ -13,7 +13,6 @@ const Chatbot = () => {
   const [isLoading, setIsLoading] = useState(false);
   const messagesEndRef = useRef(null);
   const [language, setLanguage] = useState('en'); // Default language is English
-  const [feedbackData, setFeedbackData] = useState([]); // Store feedback data
 
   // Define your backend API URL
   // Use a relative path if serving frontend and backend from the same domain/port in production
@@ -101,14 +100,12 @@ const Chatbot = () => {
       timestamp: new Date().toISOString()
     };
 
-    setFeedbackData(prev => [...prev, newFeedback]);
-
     console.log('Feedback received:', newFeedback);
 
     // In a real application, you would send this feedback to your server
-    // axios.post('/api/feedback', newFeedback)
-    //   .then(response => console.log('Feedback sent successfully'))
-    //   .catch(error => console.error('Error sending feedback:', error));
+    axios.post(`${process.env.REACT_APP_API_URL}/api/feedback`, newFeedback)
+      .then(response => console.log('Feedback sent successfully'))
+      .catch(error => console.error('Error sending feedback:', error));
   };
 
   const clearConversation = () => {

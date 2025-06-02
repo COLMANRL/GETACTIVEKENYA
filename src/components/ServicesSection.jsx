@@ -39,7 +39,7 @@ const ServicesSection = () => {
               <p className="text-gray-600 mb-4">
                 Holistic approaches to skincare, nutrition, and physical wellness that complement mental health practices.
               </p>
-              <a href="#" className="text-blue-500 font-medium flex items-center">
+              <a href="#book" className="text-blue-500 font-medium flex items-center">
                 Coming soon <ChevronRight size={16} className="ml-1" />
               </a>
             </div>
