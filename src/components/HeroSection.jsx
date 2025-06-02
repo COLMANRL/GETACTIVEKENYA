@@ -22,7 +22,7 @@ const HeroSection = () => {
 
 
   return (
-    <section className="hero-section relative pt-24 md:pt-32 pb-16 md:pb-24 px-4 overflow-hidden">
+    <section className="hero-section relative pt-24 md:pt-32 pb-16 md:pb-24 px-4 overflow-hidden" id="HeroSection">
      {/* Background Gradient */}
      <div className="absolute inset-0 bg-gradient-to-br from-green-50 to-blue-50 z-0"></div>
 
