@@ -60,7 +60,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment:
-      name: 'Development' # Or 'Production' if this is your final deployment slot
+      name: 'Production' # Or 'Production' if this is your final deployment slot
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
