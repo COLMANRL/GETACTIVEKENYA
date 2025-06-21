@@ -69,10 +69,21 @@ jobs:
       with:
         name: node-app
 
+
+
+    - name: 'Login to Azure'
+      uses: azure/login@v1 # Use v1 or a later stable version if available
+      with:
+        creds: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        # The 'creds' input expects a JSON string of your publish profile or service principal.
+        # It's good that you already have this as a secret.
+
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp
       uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} # Still needed for the deploy action itself
         package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        # slot-name: 'production' # You might want to remove this if 'production' is the default and not a separate slot.
+                                 # Or ensure you have a 'production' slot configured if you intend to use it.
