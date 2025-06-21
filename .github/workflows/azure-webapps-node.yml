@@ -76,6 +76,7 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         # The 'creds' input expects a JSON string of your publish profile or service principal.
+        auth-type: 'PUBLISH_PROFILE' # <-- Explicitly tell it to use Publish Profile
         # It's good that you already have this as a secret.
 
     - name: 'Deploy to Azure WebApp'
