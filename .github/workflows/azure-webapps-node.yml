@@ -82,11 +82,8 @@ jobs:
 
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2 # Ensure you're using v2 or later
+      uses: azure/webapps-deploy@v2
       with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }} # This is where the publish profile is used
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
-        # slot-name: 'production' # Keep this line ONLY if you explicitly have a deployment slot named 'production'
-                                 # in your Azure Web App and intend to deploy to it.
-                                 # Otherwise, remove it to deploy to the default production slot.
+       app-name: ${{ env.AZURE_WEBAPP_NAME }}
+       publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+       package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
