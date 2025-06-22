@@ -13,7 +13,7 @@ const chatbotRoutes = require('./routes/chatbot'); // Import the existing chatbo
 
 // 3. Initialize Express app
 const app = express();
-const port = process.env.PORT || 3001; // Use process.env.PORT for flexibility
+const port = process.env.PORT || 8080; // Use process.env.PORT for flexibility
 
 // 4. Middleware setup
 app.use(cors()); // Enable CORS for cross-origin requests

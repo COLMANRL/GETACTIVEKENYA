@@ -5,10 +5,10 @@ const TestimonialsSection = () => {
 
   // Sample testimonials
   const testimonials = [
-    {
-      name: "Amina K.",
-      text: "GetActiveKenya transformed my approach to mental wellness. The therapist I connected with understood my unique challenges and helped me develop practical coping strategies."
-    },
+  //  {
+    //  name: "Amina K.",
+    //  text: "GetActiveKenya transformed my approach to mental wellness. The therapist I connected with understood my unique challenges and helped me develop practical coping strategies."
+//    },
     {
       name: "David M.",
       text: "The holistic approach to wellness is what sets GetActiveKenya apart. I've seen improvements in both my mental state and physical wellbeing since starting my journey here."
