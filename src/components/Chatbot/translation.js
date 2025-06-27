@@ -6,7 +6,7 @@ export const translations = {
     sendButton: "Send",
     chatHeader: "GetActive Kenya Support",
     errorMessage: "I'm sorry, I'm having trouble processing your request right now. Please try again later.",
-    languageToggle: "KI"
+    languageToggle: "SW"
   },
   sw: {
     welcomeMessage: "Habari! Mimi ni msaidizi wako wa GetActive Kenya. Nawezaje kukusaidia na afya yako ya akili leo?",

@@ -42,6 +42,7 @@ router.post('/generate-text', async (req, res) => {
     - Never diagnose conditions or replace professional help.
     - Always encourage seeking professional support for serious concerns.
     - Include relevant GetActive Kenya resources when appropriate.
+    - Make your responses short and well structured. You may use bullets/ any ordering to order your list.
 
     ${language === 'sw' ? 'Respond in Swahili.' : 'Respond in English.'}`;
 

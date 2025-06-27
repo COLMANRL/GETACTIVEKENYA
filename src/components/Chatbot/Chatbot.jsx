@@ -19,7 +19,7 @@ const Chatbot = () => {
   // For development, use the full URL including port
   const BACKEND_API_URL = process.env.NODE_ENV === 'production'
     ? '/api/chatbot/generate-text' // Adjust this path if your server setup is different
-    : 'http://localhost:3001/api/chatbot/generate-text'; // <-- Match your backend server URL and route
+    : `${process.env.REACT_APP_API_URL}/api/chatbot/generate-text`; // <-- Match your backend server URL and route
 
   // Load messages from localStorage when component mounts
   useEffect(() => {
