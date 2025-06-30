@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Mail } from 'lucide-react';
+import baseUrl from "../baseUrl";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -22,7 +23,7 @@ const ContactSection = () => {
     setError('');
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/send-email`, {
+      const response = await fetch(`${baseUrl}/api/send-email`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

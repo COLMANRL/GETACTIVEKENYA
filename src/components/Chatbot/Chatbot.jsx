@@ -5,6 +5,7 @@ import axios from 'axios';
 import './Chatbot.css';
 import FeedbackComponent from './FeedbackComponent';
 import { translations } from './translation';
+import baseUrl from '../../baseUrl';
 
 const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,7 +20,7 @@ const Chatbot = () => {
   // For development, use the full URL including port
   const BACKEND_API_URL = process.env.NODE_ENV === 'production'
     ? '/api/chatbot/generate-text' // Adjust this path if your server setup is different
-    : `${process.env.REACT_APP_API_URL}/api/chatbot/generate-text`; // <-- Match your backend server URL and route
+    : `${baseUrl}/api/chatbot/generate-text`; // <-- Match your backend server URL and route
 
   // Load messages from localStorage when component mounts
   useEffect(() => {
@@ -103,7 +104,7 @@ const Chatbot = () => {
     console.log('Feedback received:', newFeedback);
 
     // In a real application, you would send this feedback to your server
-    axios.post(`${process.env.REACT_APP_API_URL}/api/feedback`, newFeedback)
+    axios.post(`${baseUrl}/api/feedback`, newFeedback)
       .then(response => console.log('Feedback sent successfully'))
       .catch(error => console.error('Error sending feedback:', error));
   };

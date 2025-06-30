@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Shield, Calendar, User, CheckCircle, AlertCircle, Loader } from 'lucide-react';
+import baseUrl from "../baseUrl";
 
 const BookingSection = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ const BookingSection = () => {
     setErrorMessage('');
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/bookings`, {
+      const response = await fetch(`${baseUrl}/api/bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
