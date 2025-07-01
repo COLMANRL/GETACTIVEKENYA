@@ -73,7 +73,7 @@ jobs:
     - name: 'Login to Azure'
       uses: azure/login@v1 # Use azure/login to authenticate
       with:
-        creds: ${{ secrets.AZURE_PUBLISH_PROFILE }} # Use your publish profile secret for authentication
+        creds: ${{ secrets.AZURE_CREDENTIALS }} # Use your publish profile secret for authentication
         # auth-type: 'PUBLISH_PROFILE' # This is implicit when using publish-profile in creds for v1
 
     # Configure Azure WebApp settings (WEBSITE_RUN_FROM_PACKAGE)
