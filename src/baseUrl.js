@@ -1,2 +1,2 @@
-const baseUrl = "http://192.168.100.8:8080";
+const baseUrl = "https://gakenya-f4aed3ddefakhqfx.southafricanorth-01.azurewebsites.net";
 export default baseUrl;
