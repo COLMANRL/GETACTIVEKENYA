@@ -24,7 +24,7 @@ on:
 
 env:
   AZURE_WEBAPP_NAME: gakenya    # set this to your application's name
-  AZURE_WEBAPP_PACKAGE_PATH: 'dist'       # set this to the path to your web app project, defaults to the repository root
+  AZURE_WEBAPP_PACKAGE_PATH: 'buid'       # set this to the path to your web app project, defaults to the repository root
   NODE_VERSION: '22.x'                 # set this to the node version to use
 
 permissions:
@@ -68,6 +68,8 @@ jobs:
       uses: actions/download-artifact@v4
       with:
         name: node-app
+        # Upload only the contents of the build output folder
+        path: ${{ env.BUILD_OUTPUT_FOLDER }} # This will now correctly point to 'build'
 
     # <--- REMOVE THE AZURE LOGIN STEP COMPLETELY! --->
     # The 'azure/login' action does NOT support 'PUBLISH_PROFILE' as an auth-type.
@@ -86,4 +88,5 @@ jobs:
       with:
        app-name: ${{ env.AZURE_WEBAPP_NAME }}
        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
-       package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+       package: '.' # <--- This correctly tells the action to deploy the contents of the downloaded artifact
+       app-settings: '{"WEBSITE_RUN_FROM_PACKAGE":"1"}'
