@@ -55,24 +55,10 @@ jobs:
       with:
         name: node-app
 
-    - name: 'Login to Azure'
-      uses: azure/login@v2
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
-
-    - name: 'Configure Azure WebApp settings'
-      uses: azure/appservice-settings@v1
-      with:
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        slot-name: production
-        app-settings-json: |
-          {
-            "WEBSITE_RUN_FROM_PACKAGE": "1"
-          }
-
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp
-      uses: azure/webapps-deploy@v3
+      uses: azure/webapps-deploy@v2
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
         package: '.'
