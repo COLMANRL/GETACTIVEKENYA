@@ -2,20 +2,6 @@
 #
 # This workflow assumes you have already created the target Azure App Service web app.
 # For instructions see https://docs.microsoft.com/en-us/azure/app-service/quickstart-nodejs?tabs=linux&pivots=development-environment-cli
-# failed 28 times so far but I just changed to production
-# To configure this workflow:
-#
-# 1. Download the Publish Profile for your Azure Web App. You can download this file from the Overview page of your Web App in the Azure Portal.
-#     For more information: https://docs.microsoft.com/en-us/azure/app-service/deploy-github-actions?tabs=applevel#generate-deployment-credentials
-#
-# 2. Create a secret in your repository named AZURE_WEBAPP_PUBLISH_PROFILE, paste the publish profile contents as the value of the secret.
-#     For instructions on obtaining the publish profile see: https://docs.microsoft.com/azure/app-service/deploy-github-actions#configure-the-github-secret
-#
-# 3. Change the value for the AZURE_WEBAPP_NAME. Optionally, change the AZURE_WEBAPP_PACKAGE_PATH and NODE_VERSION environment variables below.
-#
-# For more information on GitHub Actions for Azure: https://github.com/Azure/Actions
-# For more information on the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
-# For more samples to get started with GitHub Action workflowss to deploy to Azure: https://github.com/Azure/actions-workflow-samples
 
 on:
   push:
@@ -52,11 +38,11 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: node-app
-        path: ${{ env.BUILD_OUTPUT_FOLDER }} # Uploads only the 'build' folder
+        path: ${{ env.BUILD_OUTPUT_FOLDER }}
 
   deploy:
     permissions:
-      contents: none # No need for contents: write unless you're writing back to the repo
+      contents: none
     runs-on: ubuntu-latest
     needs: build
     environment:
@@ -69,21 +55,16 @@ jobs:
       with:
         name: node-app
 
-    # NEW: Explicit Azure Login for subsequent Azure CLI-based actions (like appservice-settings)
     - name: 'Login to Azure'
-      uses: azure/login@v1 # Use azure/login to authenticate
+      uses: azure/login@v2
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }} # Use your publish profile secret for authentication
-        # auth-type: 'PUBLISH_PROFILE' # This is implicit when using publish-profile in creds for v1
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-    # Configure Azure WebApp settings (WEBSITE_RUN_FROM_PACKAGE)
-    # This action now expects you to be logged in via azure/login
     - name: 'Configure Azure WebApp settings'
       uses: azure/appservice-settings@v1
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        slot-name: production # If you're deploying directly to production, or a specific slot
-        # publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }} # REMOVED: No longer needed here after azure/login
+        slot-name: production
         app-settings-json: |
           {
             "WEBSITE_RUN_FROM_PACKAGE": "1"
@@ -91,9 +72,7 @@ jobs:
 
     - name: 'Deploy to Azure WebApp'
       id: deploy-to-webapp
-      uses: azure/webapps-deploy@v2
+      uses: azure/webapps-deploy@v3
       with:
         app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.AZURE_PUBLISH_PROFILE }}
         package: '.'
-        # app-settings: '{"WEBSITE_RUN_FROM_PACKAGE":"1"}' # REMOVED: Handled by appservice-settings
